@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+  <meta charset="UTF-8">
+  <title>Բոնուս Կոդ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #0d1026;
+      font-family: Arial, sans-serif;
+      color: #ffffff;
+      text-align: center;
+      padding: 30px;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    /* Анимация падающих денег */
+    .money-bg {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .money {
+      position: absolute;
+      font-size: 2.2em;
+      will-change: transform;
+      transition: opacity 0.2s;
+      opacity: 0.85;
+      user-select: none;
+    }
+
+    h1 {
+      color: #78a5ff;
+      font-size: 32px;
+      z-index: 1;
+      position: relative;
+    }
+
+    .subtitle {
+      margin-top: -10px;
+      font-size: 14px;
+      color: #b0b0b0;
+      z-index: 1;
+      position: relative;
+    }
+
+    .bonus-box {
+      background-color: #151a33;
+      border: 2px dashed #3f5fff;
+      padding: 20px;
+      border-radius: 15px;
+      margin: 30px auto;
+      max-width: 300px;
+      z-index: 1;
+      position: relative;
+    }
+
+    .bonus-code {
+      font-size: 26px;
+      background-color: #1d223c;
+      padding: 10px 20px;
+      border-radius: 8px;
+      display: inline-block;
+      margin: 10px 5px;
+      color: #ffd633;
+      letter-spacing: 2px;
+    }
+
+    .copy-btn {
+      background-color: #3f5fff;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    #countdown {
+      font-size: 32px;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .cta-button {
+      background-color: #3f5fff;
+      color: white;
+      padding: 15px 30px;
+      font-size: 18px;
+      border: none;
+      border-radius: 30px;
+      margin-top: 30px;
+      cursor: pointer;
+      animation: pulse 2s infinite;
+      text-decoration: none;
+      display: inline-block;
+      z-index: 1;
+      position: relative;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .footer {
+      font-size: 12px;
+      margin-top: 20px;
+      color: #888;
+      z-index: 1;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  <!-- Фон с падающими деньгами -->
+  <div class="money-bg" id="money-bg"></div>
+  <h1>ԲԱՑԱՌԻԿ ԲՈՆՈՒՍ</h1>
+  <p class="subtitle">Հայաստանի նոր խաղացողների համար</p>
+
+  <div class="bonus-box">
+    <p> Ձեր բոնուս պրոմոկոդը</p>
+    <div>
+      <span class="bonus-code" id="bonusCode">ARARAT</span>
+      <button class="copy-btn" onclick="copyCode()">📋</button>
+    </div>
+    <p> Ինչ եք ստանում</p>
+— 500% ավանդի համար</p>
+— 70 ֆրիսփին</p>
+— Էքսպրես բոնուս</p>
+— Քեշբեք մինչև 30% կազինոյում</p>
+    Բոնուս պրոմո կոդերի քանակը սահմանափակ է: <p>
+Շտապեք ստանալ ձեր բոնուսը:</p>
+    <div id="countdown">00:00:00</div>
+  </div>
+
+  <a href="https://lkvn.cc/dc4a7e" class="cta-button">ԱԿՏԻՎԱՑՆԵԼ ԲՈՆՈՒՍԸ</a>
+  <p class="footer">Սեղմեք՝ գրանցվելու և բոնուսը օգտագործելու համար</p>
+
+  <script>
+    function copyCode() {
+      const code = document.getElementById("bonusCode").textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        alert("Կոդը պատճենված է");
+      });
+    }
+
+    // Таймер: 5 часов 23 минуты с момента загрузки
+    const deadline = new Date(Date.now() + (5 * 60 + 23) * 60 * 1000);
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = deadline - now;
+
+      if (distance < 0) {
+        document.getElementById("countdown").innerHTML = "Ժամկետը անցել է";
+        return;
+      }
+
+      const hours = Math.floor(distance / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("countdown").innerHTML =
+        `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // Эмодзи денег
+    const moneyEmojis = [
+      "💸", // деньги улетают
+      "💰", // мешок денег
+      "🪙", // монета
+      "🤑", // лицо с долларом
+      "💵", // купюра
+      "💶", // евро
+      "💷", // фунт
+      "💴"  // йена
+    ];
+
+    function createMoney() {
+      const moneyBg = document.getElementById('money-bg');
+      const money = document.createElement('span');
+      money.className = 'money';
+      money.textContent = moneyEmojis[Math.floor(Math.random() * moneyEmojis.length)];
+
+      const startLeft = Math.random() * window.innerWidth;
+      const duration = 4000 + Math.random() * 4000;
+      const size = 1.4 + Math.random() * 1.6; // em, для font-size
+
+      money.style.left = `${startLeft}px`;
+      money.style.top = `-50px`;
+      money.style.fontSize = `${size}em`;
+      money.style.opacity = 0.7 + Math.random() * 0.3;
+
+      moneyBg.appendChild(money);
+
+      // Анимация падения
+      setTimeout(() => {
+        money.style.transition = `top ${duration}ms linear, left ${duration}ms linear, opacity 0.5s`;
+        const endLeft = startLeft + (Math.random() - 0.5) * 150;
+        money.style.top = `${window.innerHeight + 50}px`;
+        money.style.left = `${endLeft}px`;
+        money.style.opacity = 0.4;
+      }, 50);
+
+      // Удаляем элемент после анимации
+      setTimeout(() => {
+        if (money.parentNode) money.parentNode.removeChild(money);
+      }, duration + 600);
+    }
+
+    // Создаём много купюр/монет с разной задержкой
+    setInterval(() => {
+      for (let i = 0; i < 2; i++) createMoney();
+    }, 600);
+  </script>
+</body>
+</html>
